@@ -4,29 +4,32 @@ public class D1ice {
 	static int dice1;
 	static int dice2;
 	static String con;
+	static int diceTotal;
+	static int numberOfRolls = 1;
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to the Grand Circus Casino");
 		System.out.println();
-		
+
 		rollTheDice();
 	}
 
 	// Rooll the dice
 	public static void rollTheDice() {
 
-		int numberOfRolls = 1;
+		// int numberOfRolls = 1;
 		Scanner scr = new Scanner(System.in);
 		try {
-		
+
 			do {
-				
+
 				System.out.println("How many sides should each die have: ");
 				int sides = scr.nextInt();
-				
-				if (sides <= 6) {
+
+				if (sides > 1 && sides <= 6) {
 					System.out.println("Roll " + numberOfRolls + ":");
-					numberOfRolls++;
+					numberOfRolls += 1;
+
 					System.out.println(generateRandomDieRoll(sides));
 
 					displayMessage();
@@ -36,23 +39,23 @@ public class D1ice {
 
 				System.out.println("Roll again (y/n)?");
 				con = scr.next();
-				if (con.equalsIgnoreCase("n")) {
-					break;
-				} else if (con.equalsIgnoreCase("y")) {
+				if (con.equalsIgnoreCase("y")) {
 					rollTheDice();
+				} else if (con.equalsIgnoreCase("n")) {
+					// break;
+					System.exit(0);
+
 				} else {
 					throw new Exception();
 				}
-				
 
 			} while (doYouWantToContinue());
-			
 
 		} catch (Exception e) {
 			System.out.println("****************************************");
 			System.out.println("invalid input");
 		}
-		//scr.close();
+		// scr.close();
 
 	}
 
@@ -66,13 +69,24 @@ public class D1ice {
 
 // challenge
 	public static void displayMessage() {
-		
-		if ((dice1 == 2) && (dice2 == 5))
-			System.out.println("Craps!");
-		else if ((dice1 == 6) && (dice2 == 6))
+
+		/*
+		 * if ((dice1 == 2) && (dice2 == 5)) System.out.println("Craps!"); else if
+		 * ((dice1 == 6) && (dice2 == 6)) System.out.println("Box cars!"); else if
+		 * ((dice1 == 1) && (dice2 == 1)) System.out.println("Snake eyes!");
+		 */
+		diceTotal = dice1 + dice2;
+
+		if (diceTotal == 12) {
 			System.out.println("Box cars!");
-		else if ((dice1 == 1) && (dice2 == 1))
+			System.out.println("craps!");
+		} else if (diceTotal == 2) {
 			System.out.println("Snake eyes!");
+			System.out.println("craps!");
+		} else if (diceTotal == 3) {
+			System.out.println("Craps!");
+
+		}
 	}
 
 // doYouWantToContinue
@@ -82,6 +96,5 @@ public class D1ice {
 		}
 		return false;
 	}
-
 
 }
